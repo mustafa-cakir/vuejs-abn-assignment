@@ -2,6 +2,13 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Initial Setup 
+
+- Project is initialized using create-vue
+- `sass-loader` and `node-sass` are added project in order to use scss within the style tag, [more info about pre-processors](https://vue-loader.vuejs.org/guide/pre-processors.html#sass) 
+
+
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
