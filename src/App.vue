@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
+import MainFooter from "@/components/footer/MainFooter.vue";
 import MainHeader from "@/components/header/MainHeader.vue";
 </script>
 
@@ -9,6 +10,7 @@ import MainHeader from "@/components/header/MainHeader.vue";
         <div class="container">
             <RouterView />
         </div>
+        <MainFooter />
     </div>
 </template>
 
@@ -17,7 +19,5 @@ import MainHeader from "@/components/header/MainHeader.vue";
 
 .app-container {
     min-height: 100vh;
-    background-color: $color-background;
-    color: $color-dark;
 }
 </style>
