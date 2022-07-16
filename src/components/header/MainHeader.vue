@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
+import { URL_ACCOUNTS, URL_HOME, URL_ACCOUNT_DETAIL } from "@/helpers/constants";
 </script>
 
 <template>
@@ -12,10 +13,13 @@ import { RouterLink } from "vue-router";
             <nav>
                 <ul>
                     <li>
-                        <RouterLink class="ui-link" to="/" activeClass="active">Home</RouterLink>
+                        <RouterLink class="ui-link" :to="URL_HOME" activeClass="active">Home</RouterLink>
                     </li>
                     <li>
-                        <RouterLink class="ui-link" to="/about" activeClass="active">About</RouterLink>
+                        <RouterLink class="ui-link" :to="URL_ACCOUNTS" activeClass="active">Accounts</RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink class="ui-link" :to="`${URL_ACCOUNT_DETAIL}/NL12387`" activeClass="active">Account Detail</RouterLink>
                     </li>
                 </ul>
             </nav>

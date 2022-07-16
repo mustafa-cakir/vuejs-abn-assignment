@@ -13,6 +13,10 @@
     width: 100%;
 }
 
+.row {
+
+}
+
 @each $breakpoint, $container-max-width in $container-max-widths {
     @include media-breakpoint-up($breakpoint) {
         .container {
@@ -23,6 +27,27 @@
 }
 
 .ui {
+    &-button {
+        background-color: $color-link;
+        color: #fff;
+        height: 46px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color .2s linear, box-shadow .2s linear;
+        &:hover {
+            text-decoration: none;
+            background-color: darken($color-link, 5%);
+        }
+        &:focus,
+        &:active {
+            box-shadow: 0 0 0 2px lighten($color-link, 40%);
+            background-color: $color-link;
+        }
+    }
     &-link {
         text-decoration: none;
         border-bottom: 1px solid transparent;
