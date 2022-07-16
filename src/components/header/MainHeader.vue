@@ -4,16 +4,18 @@ import { RouterLink } from "vue-router";
 
 <template>
     <header class="main-header">
-        <img alt="Vue logo" class="main-header-logo" src="@/assets/images/logo.svg" width="125" height="125" />
+        <RouterLink to="/">
+            <img alt="Vue logo" class="main-header-logo" src="@/assets/images/logo.svg" width="125" height="125" />
+        </RouterLink>
         <div class="main-header-right">
             <div class="greating">You did it!</div>
             <nav>
                 <ul>
                     <li>
-                        <RouterLink to="/" activeClass="active">Home</RouterLink>
+                        <RouterLink class="ui-link" to="/" activeClass="active">Home</RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/about" activeClass="active">About</RouterLink>
+                        <RouterLink class="ui-link" to="/about" activeClass="active">About</RouterLink>
                     </li>
                 </ul>
             </nav>
@@ -55,7 +57,6 @@ import { RouterLink } from "vue-router";
                     }
                 }
             }
-
         }
     }
 }

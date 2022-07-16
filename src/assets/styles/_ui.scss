@@ -2,7 +2,7 @@
 	Custom UI-Kit
  */
 
-@import './mixins';
+@import "./mixins";
 
 .container {
     margin-left: auto;
@@ -23,6 +23,17 @@
 }
 
 .ui {
+    &-link {
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        color: $color-link;
+        transition: border-bottom-color 0.2s linear, color 0.2s linear;
+        &:hover,
+        &.active {
+            text-decoration: none;
+            border-bottom-color: $color-link;
+        }
+    }
     /* media break point varianted UI rules */
     @each $breakpoint in map-keys($grid-breakpoints) {
         @include media-breakpoint-up($breakpoint) {
