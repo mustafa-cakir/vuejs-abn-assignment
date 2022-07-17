@@ -15,3 +15,18 @@ export const priceFormatter = (amount = 0, currency = "EUR"): string => {
         currency,
     });
 };
+
+/**
+ *
+ * @param callback {function}
+ * @param wait {number}
+ * Helper function to wait a certain amount of time before running again
+ */
+export const debounce = (callback: (...arg: any[]) => void, wait = 250) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: unknown[]) => {
+        const next = () => callback(...args);
+        clearTimeout(timeout);
+        timeout = setTimeout(next, wait);
+    };
+};

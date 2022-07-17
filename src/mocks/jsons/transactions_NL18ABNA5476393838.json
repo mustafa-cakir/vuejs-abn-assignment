@@ -1,5 +1,8 @@
 {
-  "account": "",
+  "account": {
+    "accountNumber": "NL18ABNA5476393838",
+    "currencyCode": "EUR"
+  },
   "transactions": [
     {
       "transactionId": "193466467514933.040002",

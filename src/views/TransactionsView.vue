@@ -32,7 +32,7 @@ onMounted(() => {
 </script>
 <template>
     <h1>Transactions Details</h1>
-    <RouterLink :to="URL_ACCOUNTS"><FeatherIcon name="chevron-left" /> Back</RouterLink>
+    <RouterLink class="ui-link back-btn" :to="URL_ACCOUNTS"><FeatherIcon name="chevron-left" /> Back</RouterLink>
     <TransactionsLoading v-if="isLoading" />
     <AlertBox v-else-if="errorMessage" type="error" :message="errorMessage" />
     <TransactionsContainer
@@ -42,3 +42,11 @@ onMounted(() => {
     />
     <AlertBox v-else type="info" message="Transaction details can't be gathered." />
 </template>
+
+<style>
+.back-btn {
+    display: inline-flex;
+    margin: 0 0 15px;
+    align-items: center;
+}
+</style>

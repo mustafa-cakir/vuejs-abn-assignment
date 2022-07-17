@@ -71,19 +71,7 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
     padding: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: -15px;
-        margin-right: -15px;
-    }
     .col {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-        width: 100%;
         &-balance {
             flex: 0 0 100%;
             max-width: 100%;

@@ -2,9 +2,9 @@
 import { ref, onMounted } from "vue";
 import { fetchService } from "@/services/fetch";
 import type { IAccountGroups, IAccountGroupsResponse } from "@/types/types";
-import AccountGroupsContainer from "@/components/Accounts/AccountGroupsContainer.vue";
 import AccountsLoading from "@/components/Accounts/AccountsLoading.vue";
 import AlertBox from "@/components/common/AlertBox.vue";
+import AccountGroup from "@/components/Accounts/AccountGroup.vue";
 
 const isLoading = ref<boolean>(true);
 const errorMessage = ref<string>("");
@@ -24,11 +24,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="about">
-        <h1>Accounts</h1>
-        <AccountsLoading v-if="isLoading" />
-        <AlertBox v-else-if="errorMessage" type="error" :message="errorMessage" />
-        <AccountGroupsContainer v-else-if="accountGroups && accountGroups.length > 0" :accountGroups="accountGroups" />
-        <AlertBox v-else message="No account groups have been found." type="info" />
-    </div>
+    <h1>Accounts</h1>
+    <AccountsLoading v-if="isLoading" />
+    <AlertBox v-else-if="errorMessage" type="error" :message="errorMessage" />
+    <template v-else-if="accountGroups && accountGroups.length > 0">
+        <AccountGroup v-for="accountGroup in accountGroups" :key="accountGroup.groupId" :accountGroup="accountGroup" />
+    </template>
+    <AlertBox v-else message="No account groups have been found." type="info" />
 </template>

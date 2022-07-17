@@ -13,14 +13,11 @@ const props = defineProps<Props>();
     <h3 class="account-group-title">
         <span>{{ props.accountGroup.groupName }}</span>
     </h3>
-    <AlertBox
-        type="info"
-        message="No account has been found."
-        v-if="!props.accountGroup.accounts || props.accountGroup.accounts.length === 0"
-    />
-    <div class="account-cards-container" v-if="props.accountGroup.accounts && props.accountGroup.accounts.length > 0">
+
+    <div v-if="props.accountGroup.accounts && props.accountGroup.accounts.length > 0" class="account-cards-container">
         <AccountCard :account="account" v-for="account in props.accountGroup.accounts" :key="account.accountNumber" />
     </div>
+    <AlertBox v-else type="info" message="No account has been found." />
 </template>
 
 <style lang="scss">
