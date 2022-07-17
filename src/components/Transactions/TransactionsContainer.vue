@@ -41,7 +41,7 @@ const cancelSearchHandler = () => {
             <div class="row">
                 <div class="col col-filter">Filter Goes here</div>
                 <div class="col col-search">
-                    <div class="ui-search-input">
+                    <div class="transactions-search-input">
                         <input
                             type="text"
                             placeholder="Search"
@@ -50,6 +50,7 @@ const cancelSearchHandler = () => {
                         />
                         <FeatherIcon name="search" class="search-icon" />
                         <button
+                            class="cancel-icon"
                             type="button"
                             @click="cancelSearchHandler"
                             v-if="searchValue"
@@ -106,17 +107,21 @@ const cancelSearchHandler = () => {
     background-color: #fff;
     box-shadow: 0 0 15px rgba($color-dark, 0.05);
     border-radius: 10px 10px 0 0;
+
     &-info {
         height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     &-account {
         padding: 15px 15px 0;
     }
+
     &-filters {
         padding: 0 15px;
+
         .col {
             &-filter,
             &-search {
@@ -130,6 +135,7 @@ const cancelSearchHandler = () => {
             }
         }
     }
+
     &-table {
         border-collapse: separate;
         border-spacing: 0;
@@ -138,9 +144,11 @@ const cancelSearchHandler = () => {
         vertical-align: middle;
         width: 100%;
         min-width: 1200px;
+
         &-container {
             max-width: 100%;
         }
+
         thead {
             vertical-align: bottom;
         }
@@ -149,6 +157,7 @@ const cancelSearchHandler = () => {
         th {
             padding: 15px;
         }
+
         th {
             min-width: 150px;
             background-color: rgba($color-dark, 0.05);
@@ -166,8 +175,73 @@ const cancelSearchHandler = () => {
                 border-bottom: none;
             }
         }
+
         .text-align-right {
             text-align: right;
+        }
+    }
+
+    &-search-input {
+        position: relative;
+
+        .search-icon,
+        .cancel-icon {
+            position: absolute;
+            height: 42px;
+            width: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            left: 0;
+            top: 0;
+            font-size: 18px;
+            color: rgba($color-dark, 0.5);
+            transition: color 0.2s linear;
+        }
+
+        .cancel-icon {
+            left: auto;
+            right: 0;
+            border-radius: 0 5px 5px 0;
+            color: $color-dark;
+            transition: background-color 0.2s linear;
+
+            &:hover {
+                background-color: rgba($color-dark, 0.05);
+            }
+        }
+
+        input {
+            display: block;
+            border: 1px solid rgba($color-dark, 0.5);
+            height: 42px;
+            padding: 0 42px;
+            width: 100%;
+            border-radius: 5px;
+            transition: border-color 0.2s linear, box-shadow 0.2s linear;
+
+            &::placeholder {
+                color: rgba($color-dark, 0.5);
+            }
+
+            &:hover,
+            &:not(:placeholder-shown) {
+                border-color: $color-dark;
+
+                + .search-icon {
+                    color: $color-dark;
+                }
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $color-link;
+                box-shadow: 0 0 0 2px rgba($color-link, 0.2);
+
+                + .icons {
+                    color: $color-dark;
+                }
+            }
         }
     }
 }

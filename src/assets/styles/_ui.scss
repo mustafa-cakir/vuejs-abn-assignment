@@ -39,55 +39,6 @@
 }
 
 .ui {
-    &-search-input {
-        position: relative;
-        .search-icon,
-        .cancel-icon {
-            position: absolute;
-            height: 42px;
-            width: 42px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            left: 0;
-            top: 0;
-            font-size: 18px;
-            color: rgba($color-dark, 0.3);
-            transition: color 0.3s linear;
-        }
-        .cancel-icon {
-            left: auto;
-            right: 0;
-            color: $color-dark;
-        }
-        input {
-            display: block;
-            border: 1px solid rgba($color-dark, 0.1);
-            height: 42px;
-            padding: 0 42px;
-            width: 100%;
-            border-radius: 5px;
-            transition: border-color 0.2s linear, box-shadow 0.2s linear;
-            &::placeholder {
-                color: rgba($color-dark, 0.3);
-            }
-            &:hover,
-            &:not(:placeholder-shown) {
-                border-color: $color-dark;
-                + .search-icon {
-                    color: $color-dark;
-                }
-            }
-            &:focus {
-                outline: none;
-                border-color: $color-link;
-                box-shadow: 0 0 0 2px rgba($color-link, 0.2);
-                + .icons {
-                    color: $color-dark;
-                }
-            }
-        }
-    }
     &-button {
         background-color: $color-link;
         color: #fff;
