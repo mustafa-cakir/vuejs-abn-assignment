@@ -21,7 +21,25 @@ export type IAccountGroupsResponse = {
     accountGroups: IAccountGroups;
 };
 
+export type ITransactionAccount = {
+    accountNumber: string;
+    currencyCode: string;
+};
 
-export type IError = null | {
-    message?: string;
+export type ITransaction = {
+    transactionId: string;
+    bookDate: string;
+    transactionDateTime: string;
+    creditDebitIndicator: string;
+    amount: number;
+    counterpartyAccountNumber: string;
+    counterpartyName: string;
+    description: string;
+};
+
+export type ITransactions = ITransaction[];
+
+export type ITransactionsResponse = {
+    account: ITransactionAccount;
+    transactions: ITransactions;
 };

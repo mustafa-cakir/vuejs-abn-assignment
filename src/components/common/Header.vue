@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { URL_ACCOUNTS, URL_HOME, URL_ACCOUNT_DETAIL } from "@/helpers/constants";
+import { URL_ACCOUNTS, URL_HOME, URL_TRANSACTIONS } from "@/helpers/constants";
 </script>
 
 <template>
@@ -19,7 +19,9 @@ import { URL_ACCOUNTS, URL_HOME, URL_ACCOUNT_DETAIL } from "@/helpers/constants"
                         <RouterLink class="ui-link" :to="URL_ACCOUNTS" activeClass="active">Accounts</RouterLink>
                     </li>
                     <li>
-                        <RouterLink class="ui-link" :to="`${URL_ACCOUNT_DETAIL}/NL12387`" activeClass="active">Account Detail</RouterLink>
+                        <RouterLink class="ui-link" :to="`${URL_TRANSACTIONS}/NL12387`" activeClass="active"
+                            >Transactions</RouterLink
+                        >
                     </li>
                 </ul>
             </nav>

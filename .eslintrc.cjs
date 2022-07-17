@@ -12,6 +12,7 @@ module.exports = {
     ],
     rules: {
         "indent": "error",
+        "vue/multi-word-component-names": "off",
     },
     overrides: [
         {

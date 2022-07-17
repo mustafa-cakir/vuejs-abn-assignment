@@ -3,14 +3,14 @@ import type { IAccount } from "@/types/types";
 import FeatherIcon from "@/components/common/FeatherIcon.vue";
 import { priceFormatter } from "@/helpers/utils";
 import { ref } from "vue";
-import { URL_ACCOUNT_DETAIL } from "@/helpers/constants";
+import { URL_TRANSACTIONS } from "@/helpers/constants";
 
 type Props = {
     account: IAccount;
 };
 const props = defineProps<Props>();
 
-const isMoreInfoOpen = ref(false);
+const isMoreInfoOpen = ref<boolean>(false);
 
 const moreInfoButtonClickHandler = () => {
     isMoreInfoOpen.value = !isMoreInfoOpen.value;
@@ -18,6 +18,7 @@ const moreInfoButtonClickHandler = () => {
 
 const formattedPrice = priceFormatter(props.account.balance, props.account.currencyCode);
 </script>
+
 <template>
     <div class="account-card">
         <div class="row">
@@ -25,11 +26,18 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
                 <FeatherIcon name="user" />
             </div>
             <div class="col">
-                <div class="holder-name">{{ props.account.holderName }}</div>
-                <div class="ui-text-muted">
-                    {{ props.account.accountNumber }} ({{ props.account.accountNumberType }})
+                <div class="row">
+                    <div class="col">
+                        <div class="holder-name">{{ props.account.holderName }}</div>
+                        <div class="ui-text-muted">
+                            {{ props.account.accountNumber }} ({{ props.account.accountNumberType }})
+                        </div>
+                    </div>
+                    <div class="col col-balance">
+                        <div class="ui-text-muted">Balance:</div>
+                        <div class="balance">{{ formattedPrice }}</div>
+                    </div>
                 </div>
-                <div class="balance">{{ formattedPrice }}</div>
                 <div class="more-info-btn">
                     <button
                         @click="moreInfoButtonClickHandler"
@@ -41,22 +49,22 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
                     </button>
                 </div>
                 <div class="more-info" v-if="isMoreInfoOpen">
-                    <div><span class="ui-text-muted">Bank Country:</span> {{ props.account.bankCountryCode }}</div>
+                    <div><span class="ui-text-muted">Bank Country Code:</span> {{ props.account.bankCountryCode }}</div>
                     <div>
-                        <span class="ui-text-muted">Bank Identifier:</span> {{ props.account.bankIdentifierCode }}
+                        <span class="ui-text-muted">Bank Identifier Code:</span> {{ props.account.bankIdentifierCode }}
                     </div>
                     <div><span class="ui-text-muted">Account Type:</span> {{ props.account.productName }}</div>
                 </div>
-                <RouterLink class="ui-button" :to="`${URL_ACCOUNT_DETAIL}/${props.account.accountNumber}`"
-                    >View Transactions <FeatherIcon name="chevron-right"
-                /></RouterLink>
+                <RouterLink class="ui-button" :to="`${URL_TRANSACTIONS}/${props.account.accountNumber}`"
+                    >View Transactions</RouterLink
+                >
             </div>
         </div>
     </div>
 </template>
 
 <style lang="scss">
-@import "../assets/styles/mixins";
+@import "../../assets/styles/mixins";
 .account-card {
     background-color: $color-white;
     border-radius: 15px;
@@ -66,16 +74,28 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
     .row {
         display: flex;
         flex-wrap: wrap;
-        margin-left: -10px;
-        margin-right: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
     }
     .col {
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
         width: 100%;
+        &-balance {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin: 15px 0;
+            @include media-breakpoint-up(md) {
+                margin: 0;
+                flex-direction: column;
+                flex: 0 0 300px;
+                max-width: 300px;
+                text-align: right;
+            }
+        }
         &-avatar {
             flex: 0 0 auto;
             max-width: 100%;
@@ -99,22 +119,16 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
         color: rgba($color-dark, 0.5);
     }
     .balance {
-        margin: 5px 0 15px;
         font-size: 32px;
+        @include media-breakpoint-up(lg) {
+            margin: 0;
+        }
     }
     .more-info {
         margin: 15px 0;
         &-btn {
-            margin: 15px 0;
+            margin-bottom: 15px;
         }
     }
-}
-.row {
-    flex: 0 0 auto;
-    max-width: 100%;
-    width: auto;
-}
-
-.col-auto {
 }
 </style>
