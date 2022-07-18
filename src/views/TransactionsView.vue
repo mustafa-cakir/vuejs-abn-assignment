@@ -16,7 +16,6 @@ const transactionsResponse = ref<ITransactionsResponse>();
 onMounted(() => {
     const route = useRoute();
     const { accountNumber } = route?.params || {};
-    console.log(route.params);
     if (accountNumber) {
         fetchService(`/transactions?id=${accountNumber}`)
             .then((res: ITransactionsResponse) => {

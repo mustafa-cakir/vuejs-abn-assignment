@@ -18,6 +18,25 @@ export const priceFormatter = (amount = 0, currency = "EUR"): string => {
 
 /**
  *
+ * @param date {string}
+ * @param isIncludeTime {boolean}
+ * gets the date and format is either by including the time (hh:mm) or not
+ */
+export const dateFormatter = (date: string, isIncludeTime = false): string => {
+    if (isIncludeTime)
+        return new Date(date).toLocaleDateString("nl-NL", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZoneName: "short",
+        }); // DD-MM-YYYY hh:mm CET
+    return new Date(date).toLocaleDateString("nl-NL", { month: "2-digit", day: "2-digit", year: "numeric" });
+};
+
+/**
+ *
  * @param callback {function}
  * @param wait {number}
  * Helper function to wait a certain amount of time before running again

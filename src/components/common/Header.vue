@@ -9,7 +9,6 @@ import { URL_ACCOUNTS, URL_HOME, URL_TRANSACTIONS } from "@/helpers/constants";
             <img alt="Vue logo" class="main-header-logo" src="@/assets/images/logo.svg" width="125" height="125" />
         </RouterLink>
         <div class="main-header-right">
-            <div class="greating">You did it!</div>
             <nav>
                 <ul>
                     <li>
@@ -17,11 +16,6 @@ import { URL_ACCOUNTS, URL_HOME, URL_TRANSACTIONS } from "@/helpers/constants";
                     </li>
                     <li>
                         <RouterLink class="ui-link" :to="URL_ACCOUNTS" activeClass="active">Accounts</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink class="ui-link" :to="`${URL_TRANSACTIONS}/NL12387`" activeClass="active"
-                            >Transactions</RouterLink
-                        >
                     </li>
                 </ul>
             </nav>
@@ -40,18 +34,13 @@ import { URL_ACCOUNTS, URL_HOME, URL_TRANSACTIONS } from "@/helpers/constants";
         border-bottom: 1px solid rgba($color-dark, 0.2);
     }
     &-logo {
-        height: 50px;
+        height: 44px;
         width: auto;
     }
     &-right {
         display: flex;
         flex: 1;
-
-        .greating {
-            display: flex;
-            flex: 1;
-            justify-content: center;
-        }
+        justify-content: flex-end;
         nav {
             ul {
                 display: flex;

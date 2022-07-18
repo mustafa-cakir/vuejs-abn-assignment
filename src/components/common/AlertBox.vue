@@ -22,14 +22,14 @@ const props = defineProps<Props>();
     animation: fadeIn 0.3s linear forwards;
     animation-delay: 0.3s;
     &.info {
-        color: #004085;
-        background-color: #cce5ff;
-        border-color: #b8daff;
+        color: $color-blue-dark;
+        background-color: $color-blue;
+        border-color: darken($color-blue, 5%);
     }
     &.error {
-        color: #721c24;
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
+        color: $color-red-dark;
+        background-color: $color-red;
+        border-color: darken($color-red, 5%);
     }
 }
 </style>

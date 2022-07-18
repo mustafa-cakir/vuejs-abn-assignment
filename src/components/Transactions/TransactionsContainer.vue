@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { ITransactionAccount, ITransactions } from "@/types/types";
+import type { ITransaction, ITransactionAccount, ITransactions } from "@/types/types";
 import AlertBox from "@/components/common/AlertBox.vue";
-import { priceFormatter } from "@/helpers/utils";
+import { dateFormatter, priceFormatter } from "@/helpers/utils";
 import ScrollWithShadow from "@/components/common/ScrollWithShadow.vue";
 import FeatherIcon from "@/components/common/FeatherIcon.vue";
-import { ref, watch, watchEffect } from "vue";
+import { onMounted, onUnmounted, onUpdated, ref, watch, withDirectives } from "vue";
 
 type Props = {
     transactions: ITransactions;
@@ -13,19 +13,84 @@ type Props = {
 const props = defineProps<Props>();
 
 const filteredTransactions = ref<ITransactions>(props.transactions);
-
-const printFromattedPrice = (amount: number, currency: string): string => priceFormatter(amount, currency);
-
 const searchValue = ref<string>("");
+const filterDropdownContainerEl = ref<HTMLElement>();
+const isFilterDropdownOpen = ref<boolean>(false);
+const checkedDates = ref<string[]>([]);
 
-watch(searchValue, () => {
+const getFromattedPrice = (amount: number, currency: string): string => priceFormatter(amount, currency);
+const getFormattedDate = (date: string): string => dateFormatter(date);
+const getFormattedDateByTime = (date: string): string => dateFormatter(date, true);
+
+watch([searchValue, checkedDates], () => {
     const keyword = searchValue.value;
-    filteredTransactions.value = props.transactions.filter(x => x.transactionId.indexOf(keyword) > -1);
+    const dates = checkedDates.value;
+
+    const filterbyKeyword = (transaction: ITransaction): boolean => {
+        // if no keyword presented, return true
+        if (!keyword) return true;
+
+        // if keyword is presented, check all the values of the transaction and look for a match
+        return (
+            Object.values(transaction).findIndex(
+                (x: string | number) => String(x).toLowerCase().indexOf(keyword.toLowerCase()) > -1,
+            ) > -1
+        );
+    };
+
+    const filterbyDate = (transaction: ITransaction): boolean => {
+        // if no date has been selected, return true
+        if (dates.length === 0) return true;
+
+        // if there is a selected date(s), then look for a match
+        return dates.includes(getFormattedDate(transaction.transactionDateTime));
+    };
+
+    // if there is no keyword, and no dates are selected then use the original transaction[], otherwise apply the filters
+    filteredTransactions.value =
+        !keyword && dates.length === 0
+            ? props.transactions
+            : props.transactions.filter(transaction => filterbyKeyword(transaction) && filterbyDate(transaction));
 });
 
-const cancelSearchHandler = () => {
+const cancelSearchHandler = (): void => {
     searchValue.value = "";
 };
+
+const availableDates = props.transactions.reduce<string[]>((whole, item) => {
+    const formattedDate = getFormattedDate(item.transactionDateTime);
+    if (whole.includes(formattedDate)) return whole;
+    whole.push(formattedDate);
+    return whole;
+}, []);
+
+const filterButtonClickHandler = (): void => {
+    isFilterDropdownOpen.value = !isFilterDropdownOpen.value;
+};
+
+const handleClickOutsideForFilterDropdown = (event: Event): void => {
+    if (
+        filterDropdownContainerEl?.value &&
+        !filterDropdownContainerEl.value.contains(event.target as HTMLElement) &&
+        isFilterDropdownOpen?.value
+    ) {
+        isFilterDropdownOpen.value = false;
+    }
+};
+
+const clearDateSelection = (): void => {
+    checkedDates.value = [];
+};
+
+onMounted(() => {
+    // add the handle click outside handler to document
+    document.addEventListener("click", handleClickOutsideForFilterDropdown);
+});
+
+onUnmounted(() => {
+    // cleanup upon onmount
+    document.removeEventListener("click", handleClickOutsideForFilterDropdown);
+});
 </script>
 
 <template>
@@ -39,7 +104,45 @@ const cancelSearchHandler = () => {
         <hr />
         <div class="transactions-filters">
             <div class="row">
-                <div class="col col-filter">Filter Goes here</div>
+                <div class="col col-filter">
+                    <div class="transactions-filter-selection" ref="filterDropdownContainerEl">
+                        <button
+                            type="button"
+                            role="button"
+                            class="ui-button is-ghost"
+                            :class="isFilterDropdownOpen ? 'active' : ''"
+                            aria-label="Filter by dates"
+                            @click="filterButtonClickHandler"
+                        >
+                            Filter by dates <FeatherIcon :name="isFilterDropdownOpen ? 'chevron-up' : 'chevron-down'" />
+                        </button>
+                        <div v-if="checkedDates.length > 0" class="has-dates-dot" />
+                        <div class="dropdown" v-if="isFilterDropdownOpen">
+                            <div class="dates">
+                                <label
+                                    class="date-label"
+                                    v-for="filterDropdownDate in availableDates"
+                                    :key="filterDropdownDate"
+                                >
+                                    <input type="checkbox" :value="filterDropdownDate" v-model="checkedDates" />
+                                    <span :class="checkedDates.includes(filterDropdownDate) ? 'text-bold' : ''">{{
+                                        filterDropdownDate
+                                    }}</span>
+                                </label>
+                                <button
+                                    type="button"
+                                    role="button"
+                                    aria-label="Clear date selection"
+                                    v-if="checkedDates.length > 0"
+                                    class="ui-link"
+                                    @click="clearDateSelection"
+                                >
+                                    Clear selection
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col col-search">
                     <div class="transactions-search-input">
                         <input
@@ -68,28 +171,28 @@ const cancelSearchHandler = () => {
                 <table class="transactions-table">
                     <thead>
                         <tr>
-                            <th>Transaction Id</th>
-                            <th>Counterparty Account Number</th>
+                            <th>Amount</th>
                             <th>Book Date</th>
-                            <th>Transaction Date Time</th>
-                            <th>Credit Debit Indicator</th>
-                            <th>Counterparty Name</th>
-                            <th>Description</th>
-                            <th class="text-align-right">Amount</th>
+                            <th>Acc. Number</th>
+                            <th class="min-w-160">Counterparty Name</th>
+                            <th>Credit / Debit</th>
+                            <th class="min-w-200">Description</th>
+                            <th class="min-w-200">Transaction Date</th>
+                            <th>Transaction Id</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="transaction in filteredTransactions" :key="transaction.transactionId">
-                            <td>{{ transaction.transactionId }}</td>
-                            <td>{{ transaction.counterpartyAccountNumber }}</td>
-                            <td>{{ transaction.bookDate }}</td>
-                            <td>{{ transaction.transactionDateTime }}</td>
-                            <td>{{ transaction.creditDebitIndicator }}</td>
-                            <td>{{ transaction.counterpartyName }}</td>
-                            <td>{{ transaction.description }}</td>
-                            <td class="text-align-right">
-                                {{ printFromattedPrice(transaction.amount, props.account.currencyCode) }}
+                            <td>
+                                {{ getFromattedPrice(transaction.amount, props.account.currencyCode) }}
                             </td>
+                            <td>{{ getFormattedDate(transaction.bookDate) }}</td>
+                            <td>{{ transaction.counterpartyAccountNumber }}</td>
+                            <td>{{ transaction.counterpartyName }}</td>
+                            <td>{{ transaction.creditDebitIndicator }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ getFormattedDateByTime(transaction.transactionDateTime) }}</td>
+                            <td>{{ transaction.transactionId }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,17 +223,22 @@ const cancelSearchHandler = () => {
     }
 
     &-filters {
-        padding: 0 15px;
+        margin: 15px;
 
         .col {
             &-filter,
             &-search {
-                margin: 15px 0;
                 flex: 1 0 100%;
                 max-width: 100%;
                 @include media-breakpoint-up(md) {
                     flex: 0 0 50%;
                     max-width: 50%;
+                }
+            }
+            &-filter {
+                margin-bottom: 10px;
+                @include media-breakpoint-up(md) {
+                    margin-bottom: 0;
                 }
             }
         }
@@ -159,11 +267,16 @@ const cancelSearchHandler = () => {
         }
 
         th {
-            min-width: 150px;
+            min-width: 120px;
             background-color: rgba($color-dark, 0.05);
             color: rgba($color-dark, 0.6);
             font-weight: inherit;
-            white-space: nowrap;
+            &.min-w-160 {
+                min-width: 160px;
+            }
+            &.min-w-200 {
+                min-width: 200px;
+            }
         }
 
         td {
@@ -240,6 +353,59 @@ const cancelSearchHandler = () => {
 
                 + .icons {
                     color: $color-dark;
+                }
+            }
+        }
+    }
+
+    &-filter-selection {
+        position: relative;
+        @include media-breakpoint-up(md) {
+            display: inline-flex;
+        }
+        .ui-button {
+            width: 100%;
+            justify-content: center;
+            @include media-breakpoint-up(md) {
+                width: auto;
+            }
+            .icons {
+                margin-left: 5px;
+            }
+        }
+        .has-dates-dot {
+            height: 8px;
+            width: 8px;
+            box-shadow: 0 0 0 2px #fff;
+            position: absolute;
+            right: -3px;
+            top: -3px;
+            background-color: $color-red-bright;
+            border-radius: 8px;
+        }
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 2px);
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba($color-dark, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            padding: 15px;
+            min-width: 100%;
+            .dates {
+                .text-bold {
+                    font-weight: bolder;
+                }
+                label {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                    input {
+                        margin-right: 5px;
+                    }
                 }
             }
         }

@@ -7,9 +7,9 @@ import Header from "@/components/common/Header.vue";
 <template>
     <div class="app-container">
         <Header />
-        <div class="container">
+        <main class="main-content container">
             <RouterView />
-        </div>
+        </main>
         <Footer />
     </div>
 </template>
@@ -19,5 +19,11 @@ import Header from "@/components/common/Header.vue";
 
 .app-container {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.main-content {
+    flex-grow: 1;
+    padding-bottom: 25px;
 }
 </style>
