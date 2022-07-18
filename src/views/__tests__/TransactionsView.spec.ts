@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import TransactionsView from "./TransactionsView.vue";
-import router from "@/router";
+import TransactionsView from "../TransactionsView.vue";
+import router from "../../router";
 
 const mountOptions = {
     global: {

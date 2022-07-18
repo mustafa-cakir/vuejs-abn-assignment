@@ -7,7 +7,7 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-    <div class="alert-box" :class="props.type">{{ props.message }}</div>
+    <div data-testid="alertbox" class="alert-box" :class="props.type">{{ props.message }}</div>
 </template>
 
 <style lang="scss">
