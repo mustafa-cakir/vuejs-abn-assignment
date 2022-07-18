@@ -87,80 +87,10 @@
             border-bottom-color: $color-link;
         }
     }
-    /* media break point varianted UI rules */
-    @each $breakpoint in map-keys($grid-breakpoints) {
-        @include media-breakpoint-up($breakpoint) {
-            $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-            @for $i from 0 through 30 {
-                @if $i % 5 == 0 {
-                    // margin: bottom/top => 5px, 10px, 15px, 20px, 25px, 30px
-                    // infix support:
-                    // ui-mb-5 => {all} screens will have margin-bottom: 5px;
-                    // ui-mb-lg-5 => {lg} and up will have margin-bottom: 5px;
-
-                    &-mb#{$infix}-#{$i} {
-                        margin-bottom: #{$i}px;
-                    }
-                    &-mt#{$infix}-#{$i} {
-                        margin-top: #{$i}px;
-                    }
-                }
-            }
-
-            &-text#{$infix} {
-                // text-align: left/right/center
-                // infix support:
-                // ui-text-right => {all} screens will have text-align: right;
-                // ui-text-lg-right => {lg} and up will have text-align: right;
-                &-left {
-                    text-align: left;
-                }
-                &-right {
-                    text-align: right;
-                }
-                &-center {
-                    text-align: center;
-                }
-                &-muted {
-                    color: rgba($color-dark, 0.5);
-                    &-light {
-                        color: rgba(#fff, 0.5);
-                    }
-                }
-            }
-
-            @for $i from 1 through 500 {
-                @if $i % 50 == 0 {
-                    // width, min-width, max-width for 50px, 100px....450px, 500px
-                    // height, min-height, max-height for 5px, 10px....495px, 500px
-                    // flex for 5px, 10px....495px, 500px
-                    // Supports breakpoint infix
-                    // ui-w-50 => {all} screens will have width: 50px;
-                    // ui-lg-w-50 => {lg} and up will have width: 50px;
-
-                    &#{$infix}-w-#{$i} {
-                        width: #{$i}px;
-                    }
-
-                    &#{$infix}-min-w-#{$i} {
-                        min-width: #{$i}px;
-                    }
-                    &#{$infix}-max-w-#{$i} {
-                        max-width: #{$i}px;
-                    }
-                    // height, min-height, max-height
-                    &#{$infix}-h-#{$i} {
-                        height: #{$i}px;
-                    }
-                    &#{$infix}-max-h-#{$i} {
-                        max-height: #{$i}px;
-                    }
-                    &#{$infix}-min-h-#{$i} {
-                        min-height: #{$i}px;
-                    }
-                }
-            }
+    &-text-muted {
+        color: rgba($color-dark, 0.5);
+        &-light {
+            color: rgba(#fff, 0.5);
         }
     }
 }
