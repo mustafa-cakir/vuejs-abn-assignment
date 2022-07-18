@@ -40,6 +40,7 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
                 </div>
                 <div class="more-info-btn">
                     <button
+                        data-testid="more-info-btn"
                         @click="moreInfoButtonClickHandler"
                         class="ui-link"
                         type="button"
@@ -55,7 +56,10 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
                     </div>
                     <div><span class="ui-text-muted">Account Type:</span> {{ props.account.productName }}</div>
                 </div>
-                <RouterLink class="ui-button" :to="`${URL_TRANSACTIONS}/${props.account.accountNumber}`"
+                <RouterLink
+                    data-testid="view-transaction-btn"
+                    class="ui-button"
+                    :to="`${URL_TRANSACTIONS}/${props.account.accountNumber}`"
                     >View Transactions</RouterLink
                 >
             </div>

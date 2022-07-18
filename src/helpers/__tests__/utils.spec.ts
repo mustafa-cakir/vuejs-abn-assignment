@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { dateFormatter, debounce, priceFormatter } from "@/helpers/utils";
+import { dateFormatter, debounce, priceFormatter } from "../utils";
 
 describe("Utils tests", () => {
     it("should priceFormatter return the formatted price properly", () => {
