@@ -4,7 +4,8 @@ import AlertBox from "@/components/common/AlertBox.vue";
 import { dateFormatter, priceFormatter } from "@/helpers/utils";
 import ScrollWithShadow from "@/components/common/ScrollWithShadow.vue";
 import FeatherIcon from "@/components/common/FeatherIcon.vue";
-import { onMounted, onUnmounted, onUpdated, ref, watch, withDirectives } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import Checkbox from "@/components/common/Checkbox.vue";
 
 type Props = {
     transactions: ITransactions;
@@ -91,6 +92,14 @@ onUnmounted(() => {
     // cleanup upon onmount
     document.removeEventListener("click", handleClickOutsideForFilterDropdown);
 });
+
+const onCheckboxChange = ({ target: el }: { target: HTMLInputElement }) => {
+    if (!el.checked) {
+        checkedDates.value = checkedDates.value.filter(x => x !== el.value);
+    } else {
+        checkedDates.value = [...checkedDates.value, el.value];
+    }
+};
 </script>
 
 <template>
@@ -119,22 +128,20 @@ onUnmounted(() => {
                         <div v-if="checkedDates.length > 0" class="has-dates-dot" />
                         <div class="dropdown" v-if="isFilterDropdownOpen">
                             <div class="dates">
-                                <label
-                                    class="date-label"
+                                <Checkbox
                                     v-for="filterDropdownDate in availableDates"
                                     :key="filterDropdownDate"
-                                >
-                                    <input type="checkbox" :value="filterDropdownDate" v-model="checkedDates" />
-                                    <span :class="checkedDates.includes(filterDropdownDate) ? 'text-bold' : ''">{{
-                                        filterDropdownDate
-                                    }}</span>
-                                </label>
+                                    :value="filterDropdownDate"
+                                    :label="filterDropdownDate"
+                                    :checked="checkedDates.includes(filterDropdownDate)"
+                                    @on-change="onCheckboxChange"
+                                />
                                 <button
                                     type="button"
                                     role="button"
                                     aria-label="Clear date selection"
                                     v-if="checkedDates.length > 0"
-                                    class="ui-link"
+                                    class="ui-link btn-clear-selection"
                                     @click="clearDateSelection"
                                 >
                                     Clear selection
@@ -393,20 +400,15 @@ onUnmounted(() => {
             padding: 15px;
             min-width: 100%;
             .dates {
-                .text-bold {
-                    font-weight: bolder;
-                }
                 label {
-                    display: flex;
-                    align-items: center;
                     margin-bottom: 10px;
-                    &:last-child {
+                    &:last-of-type {
                         margin-bottom: 0;
                     }
-                    input {
-                        margin-right: 5px;
-                    }
                 }
+            }
+            .btn-clear-selection {
+                margin-top: 15px;
             }
         }
     }
