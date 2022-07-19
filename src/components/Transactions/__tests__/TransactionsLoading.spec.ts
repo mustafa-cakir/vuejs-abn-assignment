@@ -12,6 +12,6 @@ const mountOptions = {
 describe("TransactionsLoading Component", () => {
     it("should render properly", () => {
         const wrapper = mount(TransactionsLoading, mountOptions);
-        expect(wrapper.text()).toContain("loading");
+        expect(wrapper.get(".box")).toBeTruthy();
     });
 });

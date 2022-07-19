@@ -4,29 +4,32 @@ This template should help get you started developing with Vue 3 in Vite.
 
 ## Initial Setup 
 
-- Project is initialized using create-vue
-- `sass-loader` and `node-sass` are added project in order to use scss within the style tag, [more info about pre-processors](https://vue-loader.vuejs.org/guide/pre-processors.html#sass) 
+- Project is initialized using `create-vue`
+- `sass-loader` and `node-sass` are added project in order to use scss within the style tag, [more info about pre-processors](https://vue-loader.vuejs.org/guide/pre-processors.html#sass)
 
 
+## Project Folder Structure
+#### Assets
+- Assets (fonts, images and style files) are stored in the `src/assets/` folder 
+- `/src/assets/styles/mixins` is the file that includes the scss variables, colors, functions and methods to be used through the entire project. So, this scss file should be imported to Vue files within the `<style scoped lang="scss">` scope as follow:
 
-## Recommended IDE Setup
+```sh 
+<style scoped lang="scss">
+  @import "src/assets/styles/mixins"; ``
+  // your scss lines here  
+</style>
+```
+- `/src/assets/styles/_ui.scss` file includes the global styles that will be used throughout the entire website.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+#### Components
+- Components are stored in the `src/components/` folder
+- `src/components/common` includes the common components that are used by more than one component.
+- `src/components/Accounts` includes the accounts page's components
+- `src/components/Transactions` includes the transactions page's components
 
-## Type Support for `.vue` Imports in TS
+## Test
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 

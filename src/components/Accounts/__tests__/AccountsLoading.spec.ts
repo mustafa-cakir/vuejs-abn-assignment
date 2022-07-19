@@ -12,6 +12,6 @@ const mountOptions = {
 describe("AccountsLoading Component", () => {
     it("should render properly", () => {
         const wrapper = mount(AccountsLoading, mountOptions);
-        expect(wrapper.text()).toContain("loading");
+        expect(wrapper.get(".top")).toBeTruthy();
     });
 });
