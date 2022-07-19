@@ -9,10 +9,12 @@ const router = createRouter({
             path: URL_HOME,
             name: "home",
             component: HomeView,
+            meta: { title: "Mustafa Cakir - ABN AMRO Assignment" },
         },
         {
             path: URL_ACCOUNTS,
             name: "accounts",
+            meta: { title: "Accounts" },
             // route level code-splitting
             // this generates a separate chunk (About.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
@@ -21,12 +23,17 @@ const router = createRouter({
         {
             path: `${URL_TRANSACTIONS}/:accountNumber`,
             name: "transactions",
+            meta: { title: "Transactions" },
             // route level code-splitting
             // this generates a separate chunk (About.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
             component: () => import("../views/TransactionsView.vue"),
         },
     ],
+});
+
+router.beforeEach(to => {
+    document.title = to.meta.title as string;
 });
 
 export default router;
