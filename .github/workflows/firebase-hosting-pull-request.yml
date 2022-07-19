@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - run: yarn install && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_EASY_PERCENTAGE_CALCULATOR }}'
-          projectId: easy-percentage-calculator
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MUSTAFA_VUEJS_ABN_ASSIGNMENT }}'
+          projectId: mustafa-vuejs-abn-assignment
