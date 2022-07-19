@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { URL_ACCOUNTS, URL_HOME, URL_TRANSACTIONS } from "@/helpers/constants";
+import { URL_ACCOUNTS, URL_HOME } from "@/helpers/constants";
 </script>
 
 <template>

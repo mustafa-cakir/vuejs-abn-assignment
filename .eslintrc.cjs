@@ -8,10 +8,10 @@ module.exports = {
         "eslint:recommended",
         "@vue/eslint-config-typescript/recommended",
         "@vue/eslint-config-prettier",
-        "prettier"
+        "prettier",
     ],
     rules: {
-        "indent": "error",
+        indent: "error",
         "vue/multi-word-component-names": "off",
     },
     overrides: [

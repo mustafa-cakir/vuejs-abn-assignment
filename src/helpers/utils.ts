@@ -41,6 +41,8 @@ export const dateFormatter = (date: string, isIncludeTime = false): string => {
  * @param wait {number}
  * Helper function to wait a certain amount of time before running again
  */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const debounce = (callback: (...arg: any[]) => void, wait = 250) => {
     let timeout: NodeJS.Timeout;
     return (...args: unknown[]) => {
