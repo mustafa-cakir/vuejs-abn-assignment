@@ -1,9 +1,8 @@
 import axios from "axios";
 import { BASE_API_URL } from "@/helpers/constants";
-import { simulateFetchWithDelay } from "@/helpers/utils";
+import { isTest, simulateFetchWithDelay } from "@/helpers/utils";
 
 export const fetchService = (api: string) => {
-    const isTest = process.env.NODE_ENV === "test";
     return axios.get(BASE_API_URL + api).then(async res => {
         // Simulate the server response delay, except test (to have the tests run faster)
         if (!isTest) await simulateFetchWithDelay();

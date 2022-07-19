@@ -51,3 +51,7 @@ export const debounce = (callback: (...arg: any[]) => void, wait = 250) => {
         timeout = setTimeout(next, wait);
     };
 };
+
+export const isTest = process.env.NODE_ENV === "test";
+export const isLocalhost = process.env.NODE_ENV === "development";
+export const isProduction = process.env.NODE_ENV === "production";

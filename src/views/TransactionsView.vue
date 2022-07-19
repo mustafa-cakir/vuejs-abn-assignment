@@ -8,6 +8,7 @@ import type { ITransactionsResponse } from "@/types/types";
 import { useRoute } from "vue-router";
 import TransactionsLoading from "@/components/Transactions/TransactionsLoading.vue";
 import AlertBox from "@/components/common/AlertBox.vue";
+import { isProduction } from "@/helpers/utils";
 
 const isLoading = ref<boolean>(true);
 const errorMessage = ref<string>("");
@@ -17,7 +18,8 @@ onMounted(() => {
     const route = useRoute();
     const { accountNumber } = route?.params || {};
     if (accountNumber) {
-        fetchService(`/transactions?id=${accountNumber}`)
+        // on production, MSW does not work stable, the data will be grabbed from the /public/api/ folder directly on production
+        fetchService(isProduction ? `/transactions_${accountNumber}.json` : `/transactions?id=${accountNumber}`)
             .then((res: ITransactionsResponse) => {
                 transactionsResponse.value = res;
                 isLoading.value = false;

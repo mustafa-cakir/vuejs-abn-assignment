@@ -5,13 +5,15 @@ import type { IAccountGroups, IAccountGroupsResponse } from "@/types/types";
 import AccountsLoading from "@/components/Accounts/AccountsLoading.vue";
 import AlertBox from "@/components/common/AlertBox.vue";
 import AccountGroup from "@/components/Accounts/AccountGroup.vue";
+import { isProduction } from "@/helpers/utils";
 
 const isLoading = ref<boolean>(true);
 const errorMessage = ref<string>("");
 const accountGroups = ref<IAccountGroups>();
 
 onMounted(() => {
-    fetchService("/accounts")
+    // On production, MSW does not work stable, the data will be grabbed from the /public/api/ folder directly on production
+    fetchService(isProduction ? "/accounts.json" : "/accounts")
         .then((res: IAccountGroupsResponse) => {
             accountGroups.value = res.accountGroups;
             isLoading.value = false;
