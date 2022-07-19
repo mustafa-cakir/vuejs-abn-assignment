@@ -24,7 +24,6 @@ describe("AlertBox Component", () => {
     });
     it("should alert box error class name if the type is error", () => {
         const wrapper = mount(AlertBox, mountOptions);
-        console.log(wrapper.get("[data-testid='alertbox']").classes);
         expect(wrapper.get("[data-testid='alertbox'].error")).toBeTruthy();
     });
     it("should render info message properly", () => {

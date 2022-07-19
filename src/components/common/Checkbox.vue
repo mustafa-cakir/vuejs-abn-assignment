@@ -2,15 +2,15 @@
 import FeatherIcon from "@/components/common/FeatherIcon.vue";
 
 type Props = {
-    value: string;
     label: string;
-    checked: boolean;
+    value?: string;
+    checked?: boolean;
 };
 const props = defineProps<Props>();
 </script>
 
 <template>
-    <label tabindex="0" class="checkbox" :class="props.checked ? 'is-checked' : ''">
+    <label tabindex="0" class="checkbox" :class="props.checked ? 'is-checked' : ''" data-testid="checkbox">
         <input type="checkbox" :value="props.value" @input="$emit('onChange', $event)" :checked="props.checked" />
         <span class="square"><FeatherIcon name="check" /></span>
         <span :class="props.checked ? 'text-bold' : ''">{{ props.label }}</span>

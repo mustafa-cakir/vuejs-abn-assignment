@@ -1,9 +1,9 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
-import { fetchService } from "@/services/fetch";
+import { fetchService } from "../fetch";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import { BASE_API_URL } from "@/helpers/constants";
-import type { IAccountGroup } from "@/types/types";
+import { BASE_API_URL } from "../../helpers/constants";
+import type { IAccountGroup } from "../../types/types";
 
 const testApi = "/api/some/path";
 const mockAcountGroupData: IAccountGroup = {

@@ -116,6 +116,7 @@ const onCheckboxChange = ({ target: el }: { target: HTMLInputElement }) => {
                 <div class="col col-filter">
                     <div class="transactions-filter-selection" ref="filterDropdownContainerEl">
                         <button
+                            data-testid="transactions-filter-btn"
                             type="button"
                             role="button"
                             class="ui-button is-ghost"
@@ -153,6 +154,7 @@ const onCheckboxChange = ({ target: el }: { target: HTMLInputElement }) => {
                 <div class="col col-search">
                     <div class="transactions-search-input">
                         <input
+                            data-testid="transactions-search-input"
                             type="text"
                             placeholder="Search"
                             v-model="searchValue"

@@ -24,7 +24,7 @@ const mountOptions = {
 describe("AccountCard Component", () => {
     it("should render properly", () => {
         const wrapper = mount(AccountCard, mountOptions);
-        expect(wrapper.text()).toContain("Balance");
+        expect(wrapper.get(".account-card")).toBeTruthy();
     });
     it("should render account holder name properly", () => {
         const wrapper = mount(AccountCard, mountOptions);
