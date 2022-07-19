@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type Props = {
-    type: "error" | "info";
+    type: string;
     message: string;
 };
 const props = defineProps<Props>();
