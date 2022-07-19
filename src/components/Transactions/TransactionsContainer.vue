@@ -60,7 +60,7 @@ const cancelSearchHandler = (): void => {
 
 const availableDates = props.transactions.reduce<string[]>((whole, item) => {
     const formattedDate = getFormattedDate(item.transactionDateTime);
-    if (whole.includes(formattedDate)) return whole;
+    if (!formattedDate || whole.includes(formattedDate)) return whole;
     whole.push(formattedDate);
     return whole;
 }, []);

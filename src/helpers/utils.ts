@@ -18,11 +18,19 @@ export const priceFormatter = (amount = 0, currency = "EUR"): string => {
 
 /**
  *
+ * @param str {string}
+ * Validate the date string whether it is valid or not
+ */
+const isValidDate = (str: string): boolean => !isNaN(Date.parse(str));
+
+/**
+ *
  * @param date {string}
  * @param isIncludeTime {boolean}
  * gets the date and format is either by including the time (hh:mm) or not
  */
 export const dateFormatter = (date: string, isIncludeTime = false): string => {
+    if (!isValidDate(date)) return "";
     if (isIncludeTime)
         return new Date(date).toLocaleDateString("nl-NL", {
             month: "2-digit",
