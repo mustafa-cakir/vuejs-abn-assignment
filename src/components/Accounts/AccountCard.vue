@@ -4,6 +4,7 @@ import FeatherIcon from "@/components/common/FeatherIcon.vue";
 import { priceFormatter } from "@/helpers/utils";
 import { ref } from "vue";
 import { URL_TRANSACTIONS } from "@/helpers/constants";
+import WithSlideEffect from "@/components/common/WithSlideEffect.vue";
 
 type Props = {
     account: IAccount;
@@ -49,13 +50,18 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
                         More info <FeatherIcon :name="isMoreInfoOpen ? 'chevron-up' : 'chevron-down'" />
                     </button>
                 </div>
-                <div class="more-info" v-if="isMoreInfoOpen">
-                    <div><span class="ui-text-muted">Bank Country Code:</span> {{ props.account.bankCountryCode }}</div>
-                    <div>
-                        <span class="ui-text-muted">Bank Identifier Code:</span> {{ props.account.bankIdentifierCode }}
+                <WithSlideEffect :isShow="isMoreInfoOpen">
+                    <div class="more-info">
+                        <div>
+                            <span class="ui-text-muted">Bank Country Code:</span> {{ props.account.bankCountryCode }}
+                        </div>
+                        <div>
+                            <span class="ui-text-muted">Bank Identifier Code:</span>
+                            {{ props.account.bankIdentifierCode }}
+                        </div>
+                        <div><span class="ui-text-muted">Account Type:</span> {{ props.account.productName }}</div>
                     </div>
-                    <div><span class="ui-text-muted">Account Type:</span> {{ props.account.productName }}</div>
-                </div>
+                </WithSlideEffect>
                 <RouterLink
                     data-testid="view-transaction-btn"
                     class="ui-button"
@@ -117,9 +123,9 @@ const formattedPrice = priceFormatter(props.account.balance, props.account.curre
         }
     }
     .more-info {
-        margin: 15px 0;
+        padding-bottom: 15px;
         &-btn {
-            margin-bottom: 15px;
+            margin: 15px 0;
         }
     }
 }
